@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperspeed Pages - Solutions for Your Business</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="js/slider-index.js">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css">
+    <!-- Optional: Add Font Awesome for Icons -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.x.x/css/all.min.css"> -->
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="#">
+                    <img src="img/logo.webp" alt="Hyperspeed Pages Logo"> <!-- REPLACE LOGO SRC -->
+                </a>
+            </div>
+            <div class="nav-cta-wrapper">
+                <nav class="main-navigation" id="main-nav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Portfolio</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                    </ul>
+                </nav>
+                <div class="header-cta">
+                    <a href="#consultation" class="button button-primary">Lets Start Project</a>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menu-toggle-button" aria-label="Toggle Menu" aria-expanded="false">☰</button>
+        </div>
+    </header>
+
+    <main>
+
+       <!-- Hero Section -->
+       <section class="hero-section-form-breakout">
+        <div class="container hero-container-form-breakout">
+
+            <!-- Left Text Column -->
+            <div class="hero-text-form-breakout">
+                <h1>We Provide <br><span class="highlight">Solutions as</span> per your Business Need</h1>
+                <p class="subtitle">
+                    At O-16 Labs, we pride ourselves on delivering tailored solutions that precisely align with your business needs. Our dedicated team is committed to understanding The Unique Challenges and goals of your enterprise. With a focus on innovation and efficiency, we provide comprehensive solutions that not only meet but exceed your expectations.
+                </p>
+                <a href="#consultation" class="button button-outline-hero">Lets Start Project</a>
+            </div>
+
+            <!-- Arrow Container -->
+            <div class="hero-arrow-container">
+                <!-- IMPORTANT: Replace with YOUR arrow image path -->
+                <img src="img/arrow-hsp.png" alt="Decorative arrow pointing to form">
+            </div>
+
+            <!-- Right Form Column/Container -->
+            <div class="hero-form-wrapper"> <!-- Wrapper for positioning -->
+                <div class="hero-form breakout-form" id="consultation">
+                    <h3>Book a Free Consultation</h3>
+                    <form action="#" method="POST">
+                        <div class="form-group"> <input type="text" id="name" name="name" placeholder="Full Name" required> </div>
+                        <div class="form-group"> <input type="email" id="email" name="email" placeholder="Email Address" required> </div>
+                        <div class="form-group"> <input type="tel" id="phone" name="phone" placeholder="Phone Number" required> </div>
+                        <div class="form-group"> <textarea id="message" name="message" rows="5" placeholder="Message" required></textarea> </div>
+                        <button type="submit" class="button button-outline-hero form-submit-button">Lets Start Project</button>
+                    </form>
+                </div>
+            </div>
+
+        </div> <!-- /.container -->
+    </section> <!-- /.hero-section-form-breakout -->
+
+     <!-- Section 2: Feature (Text Right, Image Left) -->
+     <section class="text-right-image-left-section section-padding">
+        <div class="container text-right-image-left-container">
+             <!-- Image Content Column (Left) -->
+             <div class="about-text-column">
+                <img src="img/our-story.png" alt="Team collaborating in modern office"> <!-- REPLACE SRC -->
+                <!-- Decorative bar added via CSS -->
+            </div>
+             <!-- Text Content Column (Left) -->
+             <div class="text-content-column">
+                <h2>
+                    Crafting Success Stories Through Innovation and <span class="highlight-gradient">Swift Solutions</span>
+                </h2>
+                <p>
+                    What sets us apart is our commitment to elevating your institution's unique offerings through a harmonious blend of creativity and functionality.
+                </p>
+        </div>
+        </div>
+    </section>
+
+
+       <!-- Section 3: Services (Enhanced Design) -->
+<section class="our-services-section section-padding-web">
+    <div class="container services-container-enhanced">
+
+        <div class="section-header-enhanced">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>
+                    <span class="our-core">At our core,</span> we redefine <span>digital experiences</span> by crafting <span>Dynamic Applications</span>
+                    <br />that transcend the ordinary. From conceptualization to deployment.
+                </p>
+            </div>
+            <div class="service-nav-arrows">
+                <!-- **** ADD IDs to Buttons **** -->
+                <button class="arrow-btn prev-arrow" id="service-prev" aria-label="Previous Service" disabled>‹</button> <!-- Start disabled -->
+                <button class="arrow-btn next-arrow" id="service-next" aria-label="Next Service">›</button>
+            </div>
+        </div>
+
+        <!-- **** ADD THIS WRAPPER **** -->
+        <div class="services-slider-wrapper">
+            <!-- This inner div now holds the items and moves -->
+            <div class="services-grid" id="services-grid-items">
+                <!-- Service Card 1 -->
+                <div class="service-card">
+                    <h4> E-Commerce Web<br> <h4 class="highlight-dark-bg">Design and Development</h4>
+                    <h4 class="sub-service">Quick Service</h4>
+                    <div class="service-image-container"> <img src="img/iPad-Pro.png" alt="E-commerce Website Mockup"> </div>
+                </div>
+                <!-- Service Card 2 -->
+                <div class="service-card">
+                    <h4> E-Commerce Web<br> <h4 class="highlight-dark-bg">Design and Development</h4>
+                    <h4 class="sub-service">Quick Service</h4>
+                    <div class="service-image-container"> <img src="img/iPad-Pro.png" alt="Web Application Mockup"> </div>
+                </div>
+                <!-- Service Card 3 -->
+                <div class="service-card">
+                    <h4> E-Commerce Web<br> <h4 class="highlight-dark-bg">Design and Development</h4>
+                    <h4 class="sub-service">Quick Service</h4>
+                    <div class="service-image-container"> <img src="img/iPad-Pro.png" alt="Mobile App Mockup"> </div>
+                </div>
+        </div><!-- /**** END ADDED WRAPPER **** -->
+
+    </div>
+</section>
+
+        <!-- Section 4: Feature (Text Left, Image Right) -->
+        <section class="text-left-image-right-section section-padding">
+            <div class="container text-left-image-right-container">
+                <!-- Text Content Column (Left) -->
+                <div class="text-content-column">
+                    <h2>
+                        Crafting Success Stories Through Innovation and<span class="highlight-gradient"> Swift Solutions</span>
+                    </h2>
+                    <p>
+                        What sets us apart is our commitment to elevating your institution's unique offerings through a harmonious blend of creativity and functionality. Our websites go beyond aesthetics; they serve as a gateway to a dynamic virtual learning environment.
+                    </p>
+                </div>
+                <!-- Image Content Column (Right) -->
+                <div class="image-content-column">
+                    <img src="img/Group-4.png" alt="Team collaborating in modern office"> <!-- REPLACE SRC -->
+                    <!-- Decorative bar added via CSS -->
+                </div>
+            </div>
+        </section>
+
+      <!-- Section: CTA / Hero Variant with Image Overflow -->
+<section class="cta-section-overflow section-padding">
+    <div class="container cta-overflow-container">
+        <div class="cta-content-box dark-section">
+
+            <!-- SVG Background Lines Layer -->
+            <div class="cta-background-svg-lines">
+                <svg width="1718" height="822" viewBox="0 0 1718 822" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25.501 135C242.834 340.333 542.925 952.327 240.5 795.5C-150 593 217.501 821 640.501 614C1063.5 407 1890.5 572.5 1684 649C1477.5 725.5 1821.5 376.5 1642.5 135C1463.5 -106.5 1059 126 766.001 105C473.001 83.9999 252.001 -28 1.00098 9.50003" stroke="white" stroke-opacity="0.26" stroke-width="2"/>
+             </svg>
+
+            </div>
+
+            <!-- Left Text Column -->
+            <div class="cta-text">
+                <h2>We Provide<br /> <span class="highlight">Solutions as</span> per<br /> your Business <br />Need</h2>
+                <a href="#consultation" class="button button-gradient">Lets Start Project</a>
+            </div>
+
+            <!-- Right Image Column -->
+            <div class="cta-image-overflow-wrapper">
+                <div class="tablet-image-tilt-container">
+                    <img src="img/iPad-Pro.png" alt="Tablet showing website interface or results"> <!-- REPLACE SRC -->
+                </div>
+            </div>
+
+        </div><!-- /.cta-content-box -->
+    </div><!-- /.container -->
+</section><!-- /.cta-section-overflow -->
+
+        <!-- Section 6: Process / Features -->
+        <section id="contact" class="process-section section-padding">
+             <!-- Changed ID to #contact assuming this section includes contact context -->
+            <div class="container">
+                <!-- Top Row: Heading Left, Description Right -->
+                <div class="process-header-row">
+                    <div class="process-heading-block">
+                        <h2>
+                            Crafting Success Stories Through<br> Innovation and Swift Solutions
+                        </h2>
+                    </div>
+                    <div class="process-description-block">
+                        <p>
+                            We are producing <span class= "dynamicWebsite">dynamic Website</span> for you. That will be a <span class="game-changer">game changer for you for a lifetime.</span> Yes, <span class="Lifetime">"Lifetime"</span> the way we will develop your product will finish the dependency upon us for entire life. So how will we make that difference? Redefine your educational institution's online presence with our unparalleled expertise in education web design<br /> and development.
+                        </p>
+                    </div>
+                </div>
+                <section class="services-section-process">
+                    <div class="container">
+                
+                        <!-- Services Grid -->
+                        <div class="services-grid">
+                
+                            <!-- Service Card 1  -->
+                            <div class="service-card-process">
+                                <div class="card-icon"><img src="img/turbo-charged.png"></div> <!-- Choose appropriate icon -->
+                                <h4>Turbocharged Conversions</h4>
+                                <p>Our landing pages are optimized for maximum conversions, using data-driven design and expert copywriting to drive sales and leads</p>
+                            </div>
+                
+                            <!-- Service Card 2 -->
+                            <div class="service-card-process">
+                                <div class="card-icon"><img src="img/personalized.png"></div> <!-- Choose appropriate icon -->
+                                <h4>Personalized Pit Stops</h4>
+                                <p>We craft personalized customer experiences that resonate with your target audience, increasing engagement and loyalty.</p>
+                            </div>
+                
+                            <!-- Service Card 3 -->
+                            <div class="service-card-process">
+                                <div class="card-icon"><img src="img/personalized.png"></div> <!-- Choose appropriate icon -->
+                                <h4>Vehicle Integration</h4>
+                                <p>Our landing pages integrate smoothly with your existing systems, ensuring a frictionless customer journey.</p>
+                            </div>
+                
+                            <!-- Service Card 4 -->
+                             <div class="service-card-process">
+                                <div class="card-icon"><img src="img/personalized.png"></div> <!-- Choose appropriate icon -->
+                                <h4>Fast Load Times</h4>
+                                <p>Our optimized pages load quickly, even on mobile devices, to ensure a seamless user experience</p>
+                            </div>
+                
+                        </div><!-- /.services-grid -->
+                    </div><!-- /.container -->
+                </section><!-- /.services-section -->
+                
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+
+            <!-- Get In Touch Section -->
+            <section class="get-in-touch">
+                <h2>Get In Touch With Us</h2>
+                <p class="subtitle">Drop Your Queries Below</p>
+                <form class="contact-form">
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <button type="submit">SEND</button>
+                </form>
+            </section>
+
+            <hr class="footer-divider">
+
+            <!-- Locations Section -->
+            <section class="locations-grid">
+                <div class="location-item">
+                    <h4>NEW YORK</h4>
+                    <address>
+                        151 West 19th St, 3rd Floor<br>
+                        New York, NY 10011
+                    </address>
+                    <a href="tel:+13474671161" class="phone-link">+ (1) 347 467 11 61</a>
+                </div>
+                <div class="location-item">
+                    <h4>SAN ANTONIO</h4>
+                     <address>
+                        1207 McCullough Ave.<br>
+                        San Antonio, TX 78212
+                    </address>
+                     <a href="tel:+13474671161" class="phone-link">+ (1) 347 467 11 61</a>
+                </div>
+                <div class="location-item">
+                    <h4>KARACHI</h4>
+                    <address>
+                        Suite 107, Anum Empire,<br>
+                        Shahrah-e-Faisal<br>
+                        Karachi, Pakistan
+                    </address>
+                     <a href="tel:+13474671161" class="phone-link">+ (1) 347 467 11 61</a>
+                </div>
+            </section>
+
+             <hr class="footer-divider">
+
+            <!-- Footer Links Section -->
+            <section class="footer-links-grid">
+                <div class="footer-column main-menu-column">
+                    <h4>MAIN MENU</h4>
+                    <div class="link-columns-wrapper">
+                        <div class="link-column">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Services</a></li>
+                                <li><a href="#">Case Study</a></li>
+                            </ul>
+                        </div>
+                        <div class="link-column">
+                            <ul>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-column services-menu-column">
+                     <h4>OUR SERVICES</h4>
+                     <div class="link-columns-wrapper">
+                        <div class="link-column">
+                            <ul>
+                                <li><a href="#">App Development</a></li>
+                                <li><a href="#">Branding</a></li>
+                                <li><a href="#">Data Science</a></li>
+                                <li><a href="#">Infrastructure and DevOps</a></li>
+                                <li><a href="#">Web Development</a></li>
+                            </ul>
+                        </div>
+                         <div class="link-column">
+                             <ul>
+                                <li><a href="#">Start-Up Consulting</a></li>
+                                <li><a href="#">AI Development and Integration</a></li>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Services</a></li>
+                                <li><a href="#">Case Study</a></li>
+                            </ul>
+                         </div>
+                     </div>
+                </div>
+            </section>
+
+             <hr class="footer-divider bottom-divider">
+
+             <!-- Bottom Bar -->
+             <section class="footer-bottom">
+                 <div class="social-icons">
+                     <!-- Replace with actual icons/links -->
+                     <a href="#" aria-label="Facebook">f</a>
+                     <a href="#" aria-label="Previous"> < </a> <!-- Using HTML entity for < -->
+                     <a href="#" aria-label="LinkedIn">in</a>
+                 </div>
+                 <div class="copyright">
+                     © 2025 o16 Labs. All rights reserved
+                 </div>
+             </section>
+
+        </div> <!-- /.container -->
+    </footer>
+      
+    <script src="js/index.js"></script>
+    <script src="js/slider-index.js"></script>
+</body>
+</html>
+
