@@ -1,6 +1,4 @@
-/* === CSS (eBook.css - Complete & Responsive Foundation) === */
-
-/* --- Global Resets & Base Styles --- */
+/* === Global Resets & Base Styles === */
 * {
     margin: 0;
     padding: 0;
@@ -9,7 +7,7 @@
 
 html {
     scroll-behavior: smooth;
-    font-size: 16px; /* Base font size */
+    font-size: 16px; /* Base font size for rem calculations */
 }
 
 body {
@@ -17,41 +15,51 @@ body {
     line-height: 1.6;
     color: #333; /* Default text color for light sections */
     background-color: #fff; /* Default page background */
-    overflow-x: hidden; /* Prevent accidental horizontal scroll */
+    overflow-x: hidden; /* Prevent minor accidental horizontal scroll, but strive to fix underlying issues */
 }
 
-/* --- Variables (Consolidated & Examples - ADJUST THESE) --- */
+/* --- CSS Variables --- */
 :root {
     /* Primary Colors */
-    --color-primary: #ADFF2F;       /* Lime Green */
     --color-primary-green: #4CAF50; /* Bright green (buttons, active states) */
-    --color-highlight-green: #a3ff8e; /* Lighter highlight green */
+    --color-highlight-green: #a3ff8e; /* Lighter highlight green for text */
+    --color-gradient-start: #81FE88;
+    --color-gradient-end: #C5FA55;
 
     /* Background Colors */
-    --color-dark-bg: #0c1014; /* Very dark background */
-    --color-dark-bg-alt: #1a1d21; /* Slightly less dark for sections */
-    --color-card-bg: #1a2e29; /* Dark card background */
-    --color-footer-bg: #1e1e1e; /* Footer dark */
+    --color-dark-bg: #0c1014;
+    --color-dark-bg-alt: #1a1d21; /* Hero bg, dark CTA */
+    --color-card-bg-transparent: rgba(255, 255, 255, 0.1); /* Service slider cards */
+    --color-form-bg-dark: #293125; /* Hero form */
+    --color-footer-bg: #1e1e1e;
 
     /* Text Colors */
-    --color-text-light: #e0e0e0; /* Default light text */
+    --color-text-light: #e0e0e0; /* On dark backgrounds */
     --color-text-medium: #b0bec5; /* Dimmer light text */
     --color-text-dark: #222;    /* Dark text for light backgrounds */
+    --color-text-dark-muted: #555; /* Default paragraph color */
     --color-footer-text: #aaa;
-    --color-footer-light-text: #bbb;
-
+    --color-footer-link-text: #bbb;
 
     /* Borders & Rules */
-    --color-border-subtle: rgba(76, 175, 80, 0.2); /* Subtle green border */
+    --color-border-subtle-green: rgba(144, 253, 125, 0.5); /* #90FD7D with opacity */
     --color-footer-rule: #444;
+    --color-input-border-dark: #555;
+    --color-input-bg-dark: #3b4237;
 
-    /* Fonts */
-    --font-primary: 'Poppins', sans-serif;
+    /* Spacing & Sizing */
+    --padding-section-desktop: 80px;
+    --padding-section-mobile: 40px;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
 }
 
-button a {
+/* --- Base Element Styling --- */
+a {
     text-decoration: none;
-    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+    color: var(--color-primary-green);
+    transition: opacity 0.3s ease;
 }
 
 a:hover {
@@ -61,7 +69,7 @@ a:hover {
 img {
     max-width: 100%;
     height: auto;
-    display: block;
+    display: block; /* Removes bottom space under images */
 }
 
 ul {
@@ -72,15 +80,21 @@ address {
     font-style: normal;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4 { /* Removed h5, h6 as not used in HTML */
     line-height: 1.3;
     margin-bottom: 0.7em;
-    font-weight: 600;
+    font-weight: 700; /* Bolder default for headings */
 }
+
+h1 { font-size: 2.875rem; } /* ~46px */
+h2 { font-size: 2.25rem; }  /* ~36px */
+h3 { font-size: 1.75rem; }  /* ~28px */
+h4 { font-size: 1.25rem; }  /* ~20px */
+
 
 p {
     margin-bottom: 1em;
-    color: #555; /* Default dark paragraph color */
+    color: var(--color-text-dark-muted);
 }
 
 p:last-child {
@@ -89,202 +103,168 @@ p:last-child {
 
 /* --- Utility Classes --- */
 .container {
+    width: 90%;
     max-width: 1140px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px; /* Consistent padding */
+    padding-right: 15px;
     position: relative;
 }
 
 .section-padding {
-    padding: 80px 0;
+    padding-top: var(--padding-section-desktop);
+    padding-bottom: var(--padding-section-desktop);
+}
+.section-padding-web { /* For Our Services section */
+    padding-top: var(--padding-section-desktop);
+    padding-bottom: var(--padding-section-desktop);
+    background: linear-gradient(90deg, #181C1F 1.12%, #1B2020 42.42%, #232A23 79.26%, #303B27 111.64%);
 }
 
-
-.dark-section p {
+.dark-section { /* For sections with dark backgrounds */
+    color: var(--color-text-light);
+}
+.dark-section p, .dark-section .subtitle {
     color: var(--color-text-medium);
 }
-
-.dark-section h1,
-.dark-section h2,
-.dark-section h3,
-.dark-section h4 {
+.dark-section h1, .dark-section h2, .dark-section h3, .dark-section h4 {
     color: #fff;
 }
 
-/* Style for the text where you want the gradient applied */
-.highlight-dark-bg { /* Or use/modify your existing .highlight class */
-    /* 1. Apply the gradient as a background image */
-    background-image: linear-gradient(90deg, #81FE88 41.81%, #85FE85 52.73%, #90FD7D 62.39%, #A2FC6F 71.63%, #BBFB5C 80.46%, #C5FA55 83.4%);
-
-    /* Example with your specific hex codes if you prefer not to use variables: */
-    /*
-    background-image: linear-gradient(
-        90deg,
-        #81FE88,
-        #A2FC6F,
-        #C5FA55
-    );
-    */
-
-    /* 2. Clip the background to the text */
-    -webkit-background-clip: text; /* For Safari/Chrome/iOS */
-    -moz-background-clip: text;    /* For Firefox (older versions might need this prefix) */
-    background-clip: text;         /* Standard property */
-
-    /* 3. Make the text color transparent so the background (gradient) shows through */
+/* Text Highlighting */
+.highlight { /* For "Solutions as" in hero, and dark CTA */
+    color: var(--color-highlight-green); /* Solid green highlight */
+}
+.highlight-gradient { /* For "Swift Solutions" text */
+    background: linear-gradient(90deg, var(--color-gradient-start) 1%, var(--color-gradient-end) 100%);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
     color: transparent;
-
-    /* Optional: Add some padding if the highlight looks too tight */
-    /* padding: 0.1em 0.2em; */
-
-    /* Ensure it behaves like other text elements, but inline-block allows background */
-    display: inline-block; /* Or inline, depending on desired box model behavior */
-
-    /* If you had a solid background and text color on a general .highlight class,
-       you'll need to override them or ensure this rule is more specific.
-       For example, if .highlight had:
-       background-color: #1a1a1a;
-       color: #ADFF2F;
-       You'd effectively be replacing those with the gradient properties above.
-    */
-}
-
-.text-content-column span {
-    background-image: linear-gradient(90deg, #81FE88 41.81%, #85FE85 52.73%, #90FD7D 62.39%, #A2FC6F 71.63%, #BBFB5C 80.46%, #C5FA55 83.4%);
-}
-
-/* --- Base Button Styles (if you have them) --- */
-.button {
-    background-image: linear-gradient(90deg, #81FE88 1%, #85FE85 27%, #90FD7D 50%, #A2FC6F 72%, #BBFB5C 93%, #C5FA55 100% transparent);
+    -webkit-text-fill-color: transparent;
     display: inline-block;
-    padding: 12px 28px; /* Adjust padding */
-    border-radius: var(--border-radius-md); /* Use variable or fixed value */
-    color: green;
+    margin-left: 10px;
+}
+.highlight-dark-bg { /* For "Design and Development" in service cards */
+    background: linear-gradient(90deg, var(--color-gradient-start) 41.81%, var(--color-gradient-end) 83.4%);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    display: inline-block; /* Or block if it's on its own line */
+    font-size: 1.375rem; /* ~22px */
+    line-height: 1.5;
+}
+
+
+/* --- Button Styles --- */
+.button {
+    display: inline-block;
+    padding: 12px 28px;
     font-weight: 600;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    border: none; /* Remove border if it's a filled button */
-    text-decoration: none !important;
-    font-size: 24px; /* Adjust font size */
-    font-weight: 600;
-    line-height: 105%;
+    border-radius: var(--border-radius-md);
+    font-size: 1rem; /* Base button font size */
+    line-height: 1.5;
+    border: 1px solid transparent; /* Base border for structure */
 }
 
-/* === MODIFIED .button-primary CLASS === */
-.button-primary {
-    width: 230px;
-    height: 70px;
-    
-    font-size: 0.95em;
-    background: linear-gradient(90deg, #81FE88 1%, #85FE85 27%, #90FD7D 50%, #A2FC6F 72%, #BBFB5C 93%, #C5FA55 100%);
+.button-primary { /* Header CTA: Gradient Text, Border */
+    background: linear-gradient(90deg, var(--color-gradient-start) 1%, var(--color-gradient-end) 100%);
     -webkit-background-clip: text;
     -moz-background-clip: text;
     background-clip: text;
     color: transparent;
-    border: 1px solid #90FD7D;
-    border-color: #90FD7D;
-    border-radius: 8px;
-    height: 44px;
-    font-weight: 600;
-    line-height: 105%;
-    text-align: center;
+    -webkit-text-fill-color: transparent;
+    border-color: var(--color-border-subtle-green);
+    padding: 10px 24px; /* Slightly smaller for header */
 }
 
-.button-primary:hover {
-    /* Optional: Adjust hover effect. Gradient hover is trickier.
-       You might make it slightly brighter/darker with another gradient,
-       or just use a transform or shadow change. */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    /* Example: Slightly different gradient on hover */
-    /* background-image: linear-gradient(90deg, #70ee77 1%, #74ee74 27%, #7fec72 50%, #91fb5e 72%, #aaf94b 93%, #b4f844 100%); */
-}
-.button-outline {
-    background-color: #29312500;
-    color: #A2FC6F;
-}
-
-.button-outline:hover {
-    background-color: rgba(162, 252, 111, 0.1);
-    color: #A2FC6F;
-    border-color: #A2FC6F;
-    transform: translateY(-2px);
-}
-
-.button-outline-hero {
-    width: 50%;
-    padding: 10px;
-    font-size: 0.95em;
-    background: linear-gradient(90deg, #81FE88 1%, #85FE85 27%, #90FD7D 50%, #A2FC6F 72%, #BBFB5C 93%, #C5FA55 100%);
+.button-outline-hero { /* Hero text & form submit: Gradient Text, Border */
+    background: linear-gradient(90deg, var(--color-gradient-start) 1%, var(--color-gradient-end) 100%);
     -webkit-background-clip: text;
     -moz-background-clip: text;
     background-clip: text;
     color: transparent;
-    border: 1px solid #90FD7D;
-    border-color: #90FD7D;
-    border-radius: 6px;
-    height: 44px;
-    font-weight: 600;
-    line-height: 105%;
-    text-align: center;
+    -webkit-text-fill-color: transparent;
+    border-color: var(--color-border-subtle-green);
+    width: auto; /* Allow text to define width */
+    min-width: 180px; /* Ensure it's not too small */
 }
 
-/* --- Header Styles --- */
+.button-gradient { /* Dark CTA: Gradient Background, Dark Text */
+    background: linear-gradient(90deg, var(--color-gradient-start) 1%, var(--color-gradient-end) 100%);
+    color: var(--color-text-dark); /* Dark text on gradient */
+    border: none;
+    font-size: 1.05rem;
+    padding: 14px 35px;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.button-primary:hover, .button-outline-hero:hover {
+    /* Add subtle background or border change if desired */
+    border-color: var(--color-highlight-green);
+}
+.button-gradient:hover {
+    opacity: 0.9; /* Slight fade for gradient bg */
+}
+
+
+/* --- Header --- */
 .site-header {
     position: absolute;
     top: 0;
     left: 0;
-    width: 90%;
-    z-index: 100;
+    width: 100%;
+    z-index: 1000; /* High z-index */
+    padding: 15px 0;
     transition: background-color 0.3s ease;
 }
-
+.site-header.scrolled { /* Optional: Add class via JS on scroll */
+    background-color: rgba(12, 16, 20, 0.9); /* Dark semi-transparent */
+    position: fixed;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
-.logo a img {
-    max-height: 60px;
+.logo img {
+    max-height: 45px; /* Adjusted for better balance */
     width: auto;
 }
-
 .nav-cta-wrapper {
     display: flex;
     align-items: center;
     gap: 25px;
 }
-
 .main-navigation ul {
     display: flex;
     gap: 30px;
 }
-
 .main-navigation a {
     color: var(--color-text-light);
     font-weight: 500;
-    font-size: 18px;
+    font-size: 1rem; /* ~16px */
     padding-bottom: 5px;
     border-bottom: 2px solid transparent;
-    text-decoration: none;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
 }
-
 .main-navigation a:hover,
-.main-navigation a.active {
+.main-navigation a.active { /* Add .active class to current page link */
     color: var(--color-primary-green);
     border-bottom-color: var(--color-primary-green);
-    text-decoration: none;
 }
-
-.main-navigation .mobile-cta {
-    display: none; /* Hide mobile button on desktop */
-}
-
 .menu-toggle {
-    display: none;
+    display: none; /* Hidden by default, shown in media query */
     background: none;
     border: none;
     color: #fff;
@@ -292,279 +272,213 @@ p:last-child {
     cursor: pointer;
     padding: 5px;
     line-height: 1;
-    z-index: 110;
+    z-index: 1100; /* Above nav */
 }
 
-/* --- Hero Section (#home) --- */
-.hero-section {
-    padding: 180px 0 100px;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-container {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-    position: relative;
-    z-index: 2;
-}
-
-/* --- Hero Section Styling (Form Breakout Version) --- */
+/* --- Hero Section (Form Breakout) --- */
 .hero-section-form-breakout {
-  background-image: url('../img/hero-image.png');
-    background-color: #1a1d21; /* Dark background */
-    padding: 80px 0;
-    position: relative;
-    /* background-image: url(../img/hero-image.png); USE YOUR ACTUAL PATH */
+    background-color: var(--color-dark-bg-alt);
+    background-image: url('../img/hero-image.png'); /* Ensure path is correct */
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    padding-top: 120px; /* Space for absolute header */
+    padding-bottom: var(--padding-section-desktop);
+    position: relative;
+    color: #fff; /* Default text color for this section */
 }
-
 .hero-container-form-breakout {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
     display: flex;
     align-items: center;
+    gap: 5%;
     position: relative;
     z-index: 2;
-    gap: 5%;
 }
-
 .hero-text-form-breakout {
-    flex: 0 0 45%;
-    max-width: 45%;
-    color: #fff;
+    flex: 1 1 50%; /* Allow shrinking/growing, base 50% */
+    max-width: 50%;
     position: relative;
-    z-index: 3;
+    z-index: 3; /* Above arrow */
 }
-
 .hero-text-form-breakout h1 {
-    font-size: 46px;
+    font-size: clamp(2rem, 5vw, 2.875rem); /* Responsive font size */
     font-weight: 700;
-    line-height: 1.15;
-    margin-top: 50px;
+    line-height: 1.2;
+    margin-bottom: 0.5em;
 }
-
-.hero-text-form-breakout h1 .highlight {
-    /* Fallback solid color (the original color) for browsers that don't support background-clip: text */
-    color: #a3ff8e;
-
-    /* Apply the gradient as a background */
-    background: linear-gradient(90deg, #81FE88 1%, #85FE85 27%, #90FD7D 50%, #A2FC6F 72%, #BBFB5C 93%, #C5FA55 100%);
-
-    /* Clip the background to the text */
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    background-clip: text;
-
-    /* Make the text color transparent so the background (gradient) shows through */
-    /* For Webkit browsers, -webkit-text-fill-color is more reliable for this effect */
-    -webkit-text-fill-color: transparent;
-    /* For other browsers, setting color to transparent might work,
-       but -webkit-text-fill-color is often the key for Webkit.
-       If you set color: transparent and it doesn't work,
-       -webkit-text-fill-color: transparent should be prioritized. */
-    color: transparent; /* Standard property, may be overridden by -webkit-text-fill-color */
-
-    /* Retain other styles if .highlight had them, e.g., font-weight */
-    /* font-weight: 700; (if .highlight is also used for boldness) */
-}
-
 .hero-text-form-breakout .subtitle {
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.6;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #fff; /* Overrides .dark-section p for this specific subtitle */
+    margin-bottom: 1.5em;
     max-width: 95%;
 }
-
 .hero-arrow-container {
     position: absolute;
-    z-index: 140; /* Ensure this is intended to be very high */
+    z-index: 2; /* Behind text/form but above bg */
     pointer-events: none;
-    width: auto;
-    height: auto;
-    top: 300px;
-    left: 34%;
-    transform: translateX(-40%);
+    width: 595px; /* Control size */
+    top: 80%;
+    left: 32%; /* Adjust for visual centering */
+    transform: translate(-50%, -30%); /* Fine-tune position */
+    opacity: 1;
 }
-
-.hero-arrow-container img {
-    width: 70%;
-    height: auto;
-    opacity: 0.5;
-}
-
 .hero-form-wrapper {
-    flex: 0 0 45%;
+    flex: 1 1 45%;
     max-width: 45%;
     position: relative;
     z-index: 3;
 }
-
 .hero-form.breakout-form {
-    background-color: #293125; /* Dark olive/grey */
+    background-color: var(--color-form-bg-dark);
     padding: 30px 25px;
-    border-radius: 10px;
+    border-radius: var(--border-radius-lg);
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    color: #e0e0e0;
+    color: var(--color-text-light);
     width: 100%;
-    position: relative;
-    transform: translateY(100px);
+    transform: translateY(110px); /* Slight lift */
 }
-
 .hero-form.breakout-form h3 {
     color: #FFFFFF;
-    font-size: 32px;
+    font-size: 1.5rem; /* ~24px */
     font-weight: 500;
+    margin-bottom: 1em;
 }
-
 .form-group {
     margin-bottom: 18px;
 }
-
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 10px 15px;
-    background-color: #3b4237;
-    border: 1px solid #555;
-    border-radius: 5px;
-    font-size: 16px;
-    line-height: 126%;
+    padding: 12px 15px;
+    background-color: var(--color-input-bg-dark);
+    border: 1px solid var(--color-input-border-dark);
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
     font-family: inherit;
-    color: #e0e0e0;
+    color: var(--color-text-light);
 }
-
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: #fff;
+    color: #fff; /* Lighter placeholder */
     opacity: 1;
 }
-
 .form-group textarea {
     resize: vertical;
     min-height: 100px;
 }
-
 .hero-form.breakout-form .form-submit-button {
-    width: 50%;
-    padding: 10px;
-    font-size: 0.95em;
-      /* Gradient for the text */
-    background: linear-gradient(90deg, #81FE88 1%, #85FE85 27%, #90FD7D 50%, #A2FC6F 72%, #BBFB5C 93%, #C5FA55 100%);
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    background-clip: text;
-    color: transparent; /* Makes the actual text color transparent */
-    /* Border - The border will be a solid color.
-       If you want a gradient border, that's a more complex technique. */
-    border: 1px solid #90FD7D; /* Solid border color */
-    border-color: #90FD7D;
+    width: 235px; /* Make form button full width */
+    height: 60px;
     border-radius: 6px;
-    height: 44px;
-    /* font-size: 18px; Redundant with 0.95em unless base font changes */
-    font-weight: 600;
-    line-height: 105%; /* Can be tricky with padding for vertical centering */
-    text-align: center;
 }
 
-/* --- Section: About (#about) --- */
-.about-section-collage-left {
-    background-color: #fff;
-    color: var(--color-text-dark);
+/* --- Section 2 & 4: Feature (Text Right/Left, Image Left/Right) --- */
+.text-right-image-left-section,
+.text-left-image-right-section {
+    background-color: #fff; /* Light background for these */
 }
-
-.about-collage-container {
+.text-right-image-left-container,
+.text-left-image-right-container {
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 50px; /* Spacing between text and image */
 }
-
-.about-image-column {
-    flex: 1;
+/* Generic column setup for these sections */
+.text-right-image-left-section .about-text-column, /* Image col in "our-story" */
+.text-left-image-right-section .image-content-column { /* Image col in "group-4" */
+    flex: 1 1 45%;
     max-width: 45%;
+    position: relative;
 }
-
-.image-collage-wrapper img {
-    border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-
-.about-text-column {
-    flex: 1;
+.text-right-image-left-section .text-content-column, /* Text col in "our-story" */
+.text-left-image-right-section .text-content-column { /* Text col in "group-4" */
+    flex: 1 1 55%;
     max-width: 55%;
+    margin-bottom: 140px;
 }
-
-.about-text-column h2 {
-    font-size: 20px; /* This seems small for a section title */
+.text-right-image-left-section .text-content-column h2,
+.text-left-image-right-section .text-content-column h2 {
+    font-size: 34px; /* Responsive font size */
     color: var(--color-text-dark);
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+}
+.text-right-image-left-section .text-content-column p,
+.text-left-image-right-section .text-content-column p {
+    color: var(--color-text-dark-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+/* Decorative bar for "our-story" section image */
+.text-right-image-left-section .about-text-column::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px; /* Green bar width */
+    height: 70%; /* Green bar height */
+    border-radius: var(--border-radius-sm);
+    z-index: 0;
+}
+.text-right-image-left-section .about-text-column img {
+    position: relative;
+    z-index: 1; /* Image above decorative bar */
+    border-radius: var(--border-radius-md);
+}
+/* Decorative shape for "group-4" section image */
+.text-left-image-right-section .image-content-column::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px; /* Position to the right for this layout */
+    width: 70%;
+    height: 90%;
+    z-index: 0;
+    border-radius: var(--border-radius-lg);
+}
+.text-left-image-right-section .image-content-column img {
+    border-radius: var(--border-radius-lg);
+    position: relative;
+    z-index: 1; /* Image above decorative shape */
 }
 
-.about-text-column p {
-    color: #555;
-    margin-bottom: 15px;
-    font-size: 0.95em;
-}
-
-.about-text-column p strong {
-    font-weight: 600;
-    color: var(--color-text-dark);
-}
-
-.text-right-image-left-container { /* This class seems generic, used in About */
-    display: flex;
-    gap: 70px;
-}
-
-/* --- Section: Services (#services) --- */
+/* --- Section 3: Our Services (Slider) --- */
 .services-container-enhanced {
     position: relative;
 }
-
 .section-header-enhanced {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: flex-end; /* Align text bottom with arrows */
     margin-bottom: 40px;
     gap: 30px;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
-
 .section-header-enhanced .section-header {
+    flex-basis: auto; /* Allow natural width */
+    flex-grow: 1; /* Take available space */
     text-align: left;
-    margin-top: 30px;
-    flex-basis: 70%; /* Might be too large if arrows need more space */
 }
-
 .section-header-enhanced .section-header h2 {
     color: #fff;
-    font-size: 46px;
+    font-size: clamp(2rem, 5vw, 2.875rem);
 }
-
 .section-header-enhanced .section-header p {
-    font-size: 18px;
+    font-size: 1rem;
     color: var(--color-text-medium);
     max-width: 100%;
     margin-bottom: 0;
 }
-
-.section-header-enhanced .section-header p span { /* This targets all spans, be specific if needed */
-    color: #fff;
+.section-header-enhanced .section-header p span {
+    color: #fff; /* For "At our core", "digital experiences", "Dynamic Applications" */
 }
-
 .service-nav-arrows {
     display: flex;
     gap: 15px;
+    flex-shrink: 0; /* Prevent arrows from shrinking too much */
 }
-
 .arrow-btn {
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -580,279 +494,121 @@ p:last-child {
     align-items: center;
     justify-content: center;
 }
-
-.arrow-btn:hover {
+.arrow-btn:hover:not(:disabled) {
     background-color: rgba(255, 255, 255, 0.2);
     border-color: #fff;
 }
-
-#service-next { /* ID specific styling */
-    color: Green; /* Consider using a variable like var(--color-primary-green) */
-    border-color: Green;
-}
-
-#service-prev { /* ID specific styling */
+.arrow-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
     color: #6F746C;
-    border-color: linear-gradient(90deg, #181C1F 1.12%, #1B2020 42.42%, #232A23 79.26%, #303B27 111.64%); /* Note: border-color cannot be a gradient */
-    /* If a gradient border is desired, it requires more complex techniques (e.g., pseudo-elements, background-clip) */
+    border-color: #343a3f;
+}
+#service-next:not(:disabled) { /* Style for active next arrow */
+    color: var(--color-primary-green);
+    border-color: var(--color-primary-green);
 }
 
-.services-section { /* General section for services */
-    padding: 80px 0;
-    display: flex; /* This might be unintentional if content inside isn't meant to be flex items */
-    background: linear-gradient(90deg, #181C1F 1.12%, #1B2020 42.42%, #232A23 79.26%, #303B27 111.64%);
+.services-slider-wrapper {
+    overflow: hidden; /* CRUCIAL for slider behavior */
+    position: relative; /* For absolute positioning of children if needed */
 }
-
-.services-container { /* This class seems redundant if you have .container utility */
-    background-color: #fff; /* This makes the services section white inside, contrasting the dark gradient */
+#services-grid-items { /* The moving container for the SLIDER */
+    display: flex; /* Arrange cards in a row */
+    transition: transform 0.5s ease-in-out; /* Smooth slide */
 }
-
-.services-grid .service-card h4 { /* Specific to cards within .services-grid */
-    color: grey; /* This will be overridden by more specific rules below */
-}
-
-.services-grid .service-card p {
-    color: grey; /* This will be overridden by more specific rules below */
-}
-
-.section-title { /* Generic section title, used by High Impact Services */
-    text-align: center;
-    font-size: 34px;
-    font-weight: 700;
-    color: #222;
-    line-height: 1.3;
-    margin-bottom: 60px;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Default to 3 columns for .services-section */
-    gap: 30px;
-}
-
-.service-card { /* General service card style */
-    width: 460px; /* This makes it fixed width, not ideal for grid's `1fr` unit */
-    height: 529px;
-    border-radius: 12px;
-    padding: 30px 25px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    backdrop-filter: blur(146.60000610351562px);
-    background-color: #313536;
-}
-
-.service-card:not(.service-card--featured):hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-    background-color: #004d40;
-    color: #e0e0e0;
-}
-
-.service-card:not(.service-card--featured):hover .card-icon {
-    background-color: #ffffff;
-    color: #004d40;
-}
-
-.service-card:not(.service-card--featured):hover h4 {
-    color: #ffffff;
-}
-
-.service-card:not(.service-card--featured):hover p {
-    color: #cccccc;
-}
-
-.card-icon {
-    background-color: #004d40;
-    color: #000; /* This will make the icon black, might need to be #fff */
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5em;
-    margin-bottom: 25px; /* Missing margin: 0 auto; for centering */
-}
-
-.services-grid .service-card h4 { /* Styles for titles in .services-section with .services-grid */
-    font-size: 26px;
-    font-weight: 600;
-    line-height: 43px; /* Might be too large, check line-height */
-    color: #fff; /* White title on dark card */
-    margin-bottom: 10px;
-}
-
-.services-grid .service-card .highlight-dark-bg {
-  color: #90FD7D;
-  font-size: 22px;
-}
-
-.service-card .highlight { /* For text like "Design and Development" */
-    font-size: 14px; /* This seems small if h4 is 26px */
-    font-weight: 600;
-    color: #90FD7D;
-}
-
-.services-grid .service-card p { /* Styles for paragraphs in .services-section with .services-grid */
-    font-size: 0.9em; /* This is small if .sub-service (from HTML) is meant to be larger */
-    color: #fff;
-    line-height: 1.6;
-}
-
-.service-card--featured:hover { /* Hover for featured card */
-    background-color: #004d40;
-    color: #e0e0e0;
-}
-
-.service-card--featured .card-icon {
-    background-color: #ffffff;
-    color: #004d40;
-}
-
-.service-card--featured h4 {
-    color: #004d40; /* This would make text dark on a dark bg unless bg changes */
-}
-
-.service-card--featured p {
-    color: #555;
-}
-
-
-/* --- Section: Text Left, Image Right --- */
-.text-left-image-right-section {
-    background-color: #fff;
-}
-
-.text-left-image-right-container {
-    display: flex;
-    align-items: center;
-    gap: 60px;
-}
-
-.text-content-column {
-    flex: 1;
-    max-width: 55%;
-}
-
-.text-content-column h2 {
-    font-size: 30px;
-    font-weight: 700;
-    margin-bottom: 50%; /* This is a very large margin, likely a typo? */
-    color: var(--color-text-dark);
-}
-
-.text-content-column p {
-    color: #555;
-    font-size: 0.95em;
-    transform: translateY(-250px); /* This will pull text up significantly */
-    line-height: 26px;
-}
-
-.image-content-column {
-    flex: 1;
-    max-width: 45%;
-    position: relative;
-}
-
-.image-content-column::before { /* Decorative shape behind image */
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    width: 70%;
-    height: 90%;
-    z-index: 0;
-    border-radius: 8px;
-}
-
-.image-content-column img {
-    border-radius: 8px;
-    position: relative;
-    z-index: 1;
-}
-
-/* --- CTA Section with Image Overflow --- */
-.cta-section-overflow {
-    /* background-color: #f0f4f8; /* Page background */
-}
-
-.cta-overflow-container {
-    position: relative;
-    background: linear-gradient(90deg, #181C1F 1.12%, #1B2020 42.42%, #232A23 79.26%, #303B27 111.64%);
-}
-
-.cta-content-box {
-    display: flex;
-    align-items: center;
-    border-radius: var(--border-radius-lg);
-    position: relative; /* Crucial for positioning SVG and image */
-    overflow: visible;  /* Allows image to overflow */
-    padding: 60px 0px 60px 70px; /* L:70, R:0 initially because image wrapper is absolute */
-    min-height: 380px; /* Adjust based on your content and desired box height */
-    /* background-color and color inherited from .dark-section */
-}
-
-/* === SVG Background Lines Layer === */
-.cta-background-svg-lines {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0; /* Behind all other content within cta-content-box */
-    pointer-events: none; /* Allow clicks to pass through */
-    overflow: hidden; /* Clip SVG if it's larger than the box */
-    border-radius: inherit; /* Inherit rounding from parent box */
-}
-.cta-background-svg-lines svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    /* preserveAspectRatio="xMidYMid slice" in SVG helps with scaling */
-}
-/* Style the paths within the SVG */
-.cta-background-svg-lines svg path {
-    stroke: #ffffff; /* Use variable for line color */
-    stroke-width: 1.5; /* Adjust line thickness */
-    fill: none;
-}
-
-
-/* Left Text Column */
-.cta-text {
-    flex: 1 1 50%;
+.service-card { /* Cards within the SLIDER */
+    width: 300px; /* Default width, will be adjusted in JS or media queries for slider */
     min-width: 280px;
-    order: 1;
-    position: relative; /* Ensure it's above the SVG layer */
-    z-index: 2;
-    padding-right: 30px; /* Space before potential image overlap */
+    flex-shrink: 0; /* Prevent cards from shrinking to fit in slider */
+    background-color: var(--color-card-bg-transparent);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius-lg);
+    padding: 30px 25px;
+    margin-right: 20px; /* Gap between cards in slider */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: auto;
 }
-.cta-text .highlight {
-    color: Green;
+.service-card:last-child {
+    margin-right: 0;
+}
+.service-card h4:not(.highlight-dark-bg):not(.sub-service) { /* "E-Commerce Web" */
+    font-size: 32px; /* ~26px */
+    font-weight: 600;
+    line-height: 43px;
+    color: #fff;
+    margin-bottom: 5px;
+}
+.service-card .sub-service { /* "Quick Service" */
+    font-size: 32px;
+    color: var(--color-text-medium);
+    font-weight: 600;
+    margin-top: 5px;
+    margin-bottom: auto;
+    padding-bottom: 15px;
+}
+.service-image-container {
+    margin-top: auto;
+    text-align: center;
+}
+.service-image-container img {
+   height: auto;
+   display: block;
+   transform: translateY(50px);
+}
+
+
+/* --- Section: CTA / Hero Variant with Image Overflow --- */
+.cta-section-overflow {
+    /* Uses page background or section padding background */
+}
+.cta-content-box {
+    background: linear-gradient(90deg, #181C1F 1.12%, #1B2020 42.42%, #232A23 79.26%, #303B27 111.64%);
+    border-radius: var(--border-radius-lg);
+    padding: 60px 40px;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+}
+.cta-background-svg-lines {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none; display: flex;
+    align-items: center; justify-content: center; overflow: hidden;
+    border-radius: inherit;
+}
+.cta-background-svg-lines svg { width: 100%; height: 100%; display: block; }
+.cta-background-svg-lines svg path { stroke: #fff; stroke-width: 2.0; fill: none; }
+.cta-text {
+    flex: 1 1 55%;
+    min-width: 280px;
+    position: relative;
+    z-index: 2;
+    padding-right: 30px;
+    color: var(--color-text-light);
 }
 .cta-text h2 {
-    font-size: 3.5em; /* Adjust to match image */
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
     font-weight: 800;
     line-height: 1.2;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
-.cta-text .button { /* Button style already defined by .button-gradient */
-    font-size: 1.05em;
-    padding: 14px 35px;
-}
+.cta-text h2 br { display: block; }
 
-/* Right Image Column Wrapper */
 .cta-image-overflow-wrapper {
     flex: 0 0 auto;
-    width: 50%; /* Conceptual width */
-    order: 2;
-    position: absolute; /* Relative to .cta-content-box */
-    top: -50px;         /* Pulls UP */
-    right: -70px;       /* Pulls RIGHT */
-    bottom: -50px;      /* Pulls DOWN */
+    width: 45%;
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    bottom: -50px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    z-index: 1; /* Above SVG, but below text if text needs to overlap image */
+    z-index: 1;
     pointer-events: none;
 }
 .tablet-image-tilt-container {
@@ -862,838 +618,502 @@ p:last-child {
 .tablet-image-tilt-container img {
     display: block;
     max-width: none;
-    height: 600px;
+    width: auto;
+    height: 550px;
     transition: transform 0.4s ease;
     border-radius: var(--border-radius-md);
+    filter: drop-shadow(0 10px 25px rgba(0,0,0,0.2));
+    transform: rotateY(-5deg) rotateX(2deg) rotateZ(-3deg);
 }
 .tablet-image-tilt-container:hover img {
-    transform: rotate(8deg) scale(1.02);
+    transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg) scale(1.02);
 }
 
-.button-gradient {
-    background: linear-gradient(90deg, #81FE88 1%, #85FE85 27%, #90FD7D 50%, #A2FC6F 72%, #BBFB5C 93%, #C5FA55 100%);
+/* --- Section 6: Process / Features (4 cards) --- */
+.process-section {
+    /* Uses default section padding */
 }
-
-/* --- Our Work Section (Specific to slider from previous context) --- */
-.our-work-section { /* This class is used multiple times, ensure specificity if styles differ */
-    padding: 80px 0;
-    position: relative;
-    overflow: hidden;
-    background-color: #000000; /* Black background for this "Our Work" */
-}
-
-.our-work-section .background-blob {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.1;
-    background-color: #004d40;
-    z-index: 0;
-    filter: blur(60px);
-}
-
-.our-work-section .blob-1 {
-    width: 450px;
-    height: 450px;
-    top: -120px;
-    right: -180px;
-}
-
-.our-work-section .blob-2 {
-    width: 650px;
-    height: 650px;
-    bottom: -250px;
-    left: -250px;
-}
-
-.our-work-section .section-header { /* Styles specific to "Our Work" header */
-    display: flex; /* Added to align text and nav */
-    justify-content: space-between;
-    align-items: flex-start; /* Or flex-end depending on desired alignment */
+.process-header-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 40px;
+    align-items: start; /* Align content to the top */
     margin-bottom: 50px;
 }
-
-.our-work-section .header-text {
-    max-width: 55%;
+.process-heading-block h2 {
+    font-size: 26px; /* ~26px-32px */
+    color: var(--color-text-dark);
+    margin-left: 70px;
 }
-
-.our-work-section .section-header-enhanced .section-header { /* This is very specific, check usage */
-    text-align: left;
-    margin-top: 30px; /* Was only top, consider full margin */
+.process-description-block p {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-text-dark-muted);
 }
+.process-description-block .dynamicWebsite { color: #000; font-weight: 600; font-size: 18px; }
+.process-description-block .game-changer { font-size: 18px; font-weight: 600; color: #000; }
+.process-description-block .Lifetime { font-weight: 600; font-size: 18px; color: #000; }
 
-.our-work-section .section-header-enhanced .section-header h2 {
-    font-size: 46px;
-    font-weight: 700;
-    color: #ffffff;
-    line-height: 100%; /* Can make text look cramped, use 1.2 or 1.3 */
-    margin-top: 25px; /* Consider removing if .section-header handles margin */
+/* Grid for the Process Cards */
+.services-section-process .services-grid { /* Note: .services-grid is also used by slider, ensure distinct styling if needed or use more specific selector */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Key for responsiveness */
+    gap: 20px;
 }
-
-.our-work-section .header-text p {
-    font-size: 18px;
-    color: #b0bec5;
-    line-height: 1.7;
-}
-
-.our-work-section .header-text p strong {
-    font-weight: 600;
-    color: #e0e0e0;
-}
-
-.our-work-section .slider-nav { /* Specific to "Our Work" slider nav */
+.service-card-process { /* Cards within the PROCESS section */
+    background-color: #fff;
+    border-radius: var(--border-radius-md);
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    gap: 15px;
-    padding-top: 10px; /* Align with text baseline or remove for flex-end alignment */
+    flex-direction: column;
 }
-
-.our-work-section .slider-nav .arrow {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #e0e0e0;
-    width: 40px;
-    height: 40px;
+.service-card-process:hover {
+    background-color: #343a3f;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+.service-card-process .card-icon {
+    background-color: var(--color-primary-green);
+    color: #fff;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    margin: 0 auto 20px auto;
 }
-
-.our-work-section .slider-nav .arrow:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
+.service-card-process .card-icon img {
+    max-width: 55%;
+    max-height: 55%;
 }
-
-.our-work-section .slider-nav .arrow.active { /* If JS adds .active class */
-    background-color: #4CAF50;
-    border-color: #4CAF50;
-    color: #ffffff;
+.service-card-process h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    margin-bottom: 10px;
 }
-
-.section-padding-web { /* This class seems specific, ensure it's used correctly */
-    background: linear-gradient(90deg, #181C1F 1.12%, #1B2020 42.42%, #232A23 79.26%, #303B27 111.64%);
-    padding-bottom: 70px;
+.service-card-process p {
+    font-size: 0.9rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.6;
+    margin-bottom: 0;
 }
-
-
-.our-work-section .portfolio-slider-wrapper {
-    overflow-x: auto; /* Allows horizontal scrolling if JS fails or for touch */
-    padding-bottom: 30px; /* Space for scrollbar or just visual */
-    margin-bottom: -30px; /* Pulls next section up if wrapper had bottom padding */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE/Edge */
-}
-.our-work-section .portfolio-slider-wrapper::-webkit-scrollbar {
-    display: none; /* Chrome/Safari/Opera */
-}
-
-.our-work-section .portfolio-items {
-    display: flex;
-    gap: 50px; /* Large gap between items */
-    padding: 5px; /* Small padding for items if they have outlines/shadows */
-}
-
-.our-work-section .portfolio-item {
-    flex: 0 0 auto; /* Prevent shrinking, allow fixed width */
+.service-card {
     width: 400px;
-    height: 400px; /* Fixed height, content might overflow if not managed */
-    background: linear-gradient(145deg, rgba(26, 46, 41, 0.8), rgba(15, 27, 24, 0.9));
-    border: 1px solid rgba(76, 175, 80, 0.2);
-    border-radius: 12px;
-    padding: 30px;
-    position: relative;
-    overflow: hidden; /* Clip content if it exceeds card boundaries */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    /* min-width: 280px; */
+    flex-shrink: 0;
+    background-color: var(--color-card-bg-transparent);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius-lg);
+    padding: 30px 25px;
+    margin-right: 20px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 529px;
 }
-
-.our-work-section .item-text {
-    margin-bottom: 25px;
-}
-
-.our-work-section .item-text h3 { /* E-Commerce Web */
-    font-size: 1.25em;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 8px;
-}
-
-.our-work-section .item-text h4 { /* Design and Development */
-    font-size: 1.15em;
+.service-card .sub-service {
+    font-size: 0.9rem;
+    color: var(--color-text-medium);
     font-weight: 500;
-    margin-bottom: 8px;
-    color: #ffffff; /* Assuming this should be white by default */
+    margin-top: 5px;
+    margin-bottom: auto;
+    padding-bottom: 15px;
 }
 
-.our-work-section .item-text h4 .highlight { /* Green highlight for "Design and Development" */
-    color: #4CAF50;
-    font-weight: 600;
-}
-
-.our-work-section .item-text h5 { /* Quick Service */
-    font-size: 1em;
-    font-weight: 500;
-    color: #b0bec5;
-}
-
-.our-work-section .item-image img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
-    margin-top: 10px;
-}
-
-.our-work-section .portfolio-item.item-center-glow::after {
-    content: '';
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 12px;
-    height: 12px;
-    background-color: #00f0a8;
-    border-radius: 50%;
-    box-shadow: 0 0 25px 12px rgba(0, 240, 168, 0.55);
-    z-index: 3;
-}
-
-/* --- Process Section (Text Left, Grid Right) --- */
-/* Assuming these are specific to a different process section than .meticulous-process-section */
-.process-heading-block h2 { /* Generic, might need more specificity */
-    font-size: 26px;
-    margin-left: 20px; /* This will indent if not inside a centered container */
-}
-.process-description-block p {
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 29.5px; /* Consider using unitless line-height e.g., 1.6 */
-}
-.process-description-block span { /* Generic span, be more specific */
-    font-size: 18px;
-    font-weight: 500;
-    color: #000000;
-}
-.process-header-row { /* Used within a process section */
-    display: grid;
-    grid-template-columns: 50% 50%; /* Creates two equal columns */
-}
-
-/* --- Footer Styles --- */
+/* --- Footer --- */
 .site-footer {
     background-color: var(--color-footer-bg);
     padding: 60px 0 30px;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: var(--color-footer-text);
 }
-
 .site-footer section { margin-bottom: 40px; }
 .site-footer section:last-child { margin-bottom: 0; }
+.site-footer a { color: var(--color-footer-link-text); }
 .site-footer a:hover { color: #fff; }
-.site-footer address { font-style: normal; line-height: 1.6; }
-.site-footer ul { list-style: none; padding: 0; margin: 0; }
 
 .get-in-touch { text-align: center; margin-bottom: 50px; }
-.get-in-touch h2 { font-size: 50px; font-weight: 600; color: #fff; margin-bottom: 10px; }
-.get-in-touch .subtitle { font-size: 22px; color: #FFFFFF; margin-bottom: 30px; }
-
-.contact-form { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 15px; }
+.get-in-touch h2 {
+    font-size: 55px;
+    font-weight: 600;
+    color: #fff;
+}
+.get-in-touch .subtitle {
+    font-size: 24px;
+    color: #FFFFFF;
+}
+.contact-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
 .contact-form input[type="text"],
-.contact-form input[type="email"] { padding: 12px 20px; border: none; border-radius: 8px; background-color: #fff; color: #B4B4B4; font-family: inherit; font-size: 0.95em; min-width: 250px; flex: 1; max-width: 300px; }
-.contact-form input::placeholder { color: #B4B4B4; } /* Placeholder color should match text or be lighter */
-.contact-form button { height: 45px; width: 300px; border: none; border-radius: 10px; background-color: #66C68D; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; line-height: 1; padding: 16px 32px; /* Adjust padding for vertical centering */ cursor: pointer; transition: background-color 0.3s ease; }
+.contact-form input[type="email"] {
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--border-radius-md);
+    background-color: #fff;
+    color: #333;
+    font-family: inherit;
+    font-size: 0.95rem;
+    flex: 1 1 200px;
+    min-width: 180px;
+}
+.contact-form input::placeholder { color: #888; }
+.contact-form button {
+    border: none;
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-primary-green);
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+}
 .contact-form button:hover { background-color: #3e8e41; }
 
 .footer-divider { border: none; height: 1px; background-color: var(--color-footer-rule); margin: 40px 0; }
 
-.locations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.location-item { padding-left: 30px; position: relative; text-align: center;} /* Added text-align */
-.location-item:not(:first-child)::before { content: ''; position: absolute; left: 0; top: 10%; height: 80%; width: 1px; background-color: var(--color-footer-rule); }
-.location-item h4 { font-size: 30px; font-weight: 600; color: #fff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
-.location-item address { font-size: 20px; margin-bottom: 10px; color: #ffffff; }
-.location-item .phone-link { color: #ffffff; font-size: 20px; font-weight: 500; display: block; text-decoration: none;} /* Added display block for centering */
-
-.footer-links-grid { display: grid; grid-template-columns: 35% 65%; gap: 40px; }
-.footer-column h4 { font-size: 20px; font-weight: 700; color: #fff; line-height: 137%; letter-spacing: 0%; }
-.link-columns-wrapper { display: grid; gap: 20px 30px; }
-.main-menu-column .link-columns-wrapper { grid-template-columns: repeat(2, 1fr); } /* Changed to 1 column to fit content better */
-.services-menu-column { position: relative; padding-left: 40px; }
-.services-menu-column::before { content: ''; position: absolute; left: 0; top: 10%; height: 80%; width: 1px; background-color: var(--color-footer-rule); }
-.services-menu-column .link-columns-wrapper { grid-template-columns: repeat(2, 1fr); }
-
-.link-column ul li { font-size: 16px; font-weight: 400; /* Was 14px, adjusted to match 'a' tag */ line-height: 54px; /* Large line height */ position: relative; padding-left: 18px; /* For arrow */ }
-.link-column ul li::before { content: '>'; position: absolute; left: 0; top: 1px; /* Adjust vertical alignment */ font-size: 0.7em; color: #ffffff; }
-.link-column ul li a { color: #ffffff; font-size: 16px; font-weight: 400; line-height: 54px; letter-spacing: 0%; text-decoration: none; /* Duplicated, ensure consistency */ }
-.link-column ul li a:hover { color: #fff; }
-
-.footer-divider.bottom-divider { margin-top: 50px; margin-bottom: 25px; }
-.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-.social-icons a {
-    color: var(--color-footer-social-icon, #ffffff); /* Color of the icon */
-    margin-right: 15px;
-    font-size: 1.1em; /* This will affect the size of the <i> tag */
-    text-decoration: none; /* Ensure no underline on the link */
+.locations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    text-align: center;
 }
-
-.social-icons a:last-child {
-    margin-right: 0;
+.location-item {
+    padding: 0 15px;
+    position: relative;
 }
-
-.social-icons a:hover {
-    color: var(--color-footer-social-icon-hover, #cccccc);
-}
-
-/* If you need to specifically target the <i> tag (usually not necessary if font-size on <a> is enough) */
-/*
-.social-icons a i {
-    display: inline-block;
-}
-*/
-.copyright { font-size: 0.9em; color: #ffffff; } /* Was 16px, made relative */
-
-
-/* --- Service Card Process (Specific to a different section, as it has unique H4/P colors) --- */
-.service-card-process {
-    border-radius: 12px;
-    padding: 30px 25px;
-    margin-top: 30px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0px 4px 28.6px 0px #00000026;
-}
-
-.service-card-process:not(.service-card--featured):hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    background-color: #004d40;
-    color: #e0e0e0;
-}
-
-.service-card-process:not(.service-card--featured):hover .card-icon { /* Assuming .card-icon exists */
-    background-color: #ffffff;
-    color: #004d40;
-}
-
-.service-card-process:not(.service-card--featured):hover h4 {
-    color: #ffffff;
-}
-
-.service-card-process:not(.service-card--featured):hover p {
-    color: #cccccc;
-}
-
-.service-card-process h4 { /* Titles in these cards are dark on light bg */
-    font-size: 24px;
+.location-item h4 {
+    font-size: 30px;
     font-weight: 600;
-    color: #004d40; /* Dark teal title (if on light card background) */
+    color: #fff;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+.location-item address {
+    font-size: 20px;
     margin-bottom: 10px;
+    color: #fff;
 }
-
-.service-card-process .highlight { /* Highlight within these cards */
-    color: #85FE85; /* Light green */
-}
-
-.service-card-process p { /* Paragraphs in these cards are dark */
-    font-size: 0.9em;
-    color: #555; /* Dark grey text */
-    line-height: 1.6;
-}
-
-.service-card-process--featured .card-icon { /* If featured card has specific icon style */
-    background-color: #ffffff;
-    color: #004d40;
-}
-
-.service-card-process--featured h4 { /* Title for featured card */
-    color: #004d40; /* Or #fff if featured card has dark bg */
-}
-
-.service-card-process--featured p { /* Paragraph for featured card */
-    color: #555; /* Or lighter if featured card has dark bg */
-}
-
-
-/* =========================================== */
-/* === RESPONSIVE STYLES === */
-/* =========================================== */
-
-/* --- Tablet - Large (e.g., iPads landscape, ~1024px) --- */
-@media (max-width: 1024px) {
-    .container { max-width: 960px; }
-    h1 { font-size: 2.8em; }
-    h2 { font-size: 2.2em; }
-    .section-padding { padding: 60px 0; }
-
-    /* Header */
-    .main-navigation { display: none; }
-    .menu-toggle { display: block; margin-top: 30px; }
-    .header-cta { margin-left: auto; }
-    .logo img { margin-top: 20px;}
-
-    /* Hero Form Breakout */
-    .hero-section-form-breakout { padding: 60px 0; max-width: 95%; } /* Needs max-width on inner box if desired */
-    .hero-container-form-breakout { padding: 0 30px; gap: 3%; }
-    .hero-text-form-breakout h1 { font-size: 2.8em; } /* Was 2.8em, seems large for this specific h1 */
-    .hero-arrow-container { display: none; }
-    .hero-text-form-breakout { max-width: 48%; }
-    .hero-form-wrapper { max-width: 48%; }
-    .hero-form.breakout-form { transform: translateX(5%); }
-    .hero-form.breakout-form .form-submit-button {width: 70%; padding: 10px; font-size: 16px; background: linear-gradient(90deg, #81FE88 1%, #85FE85 27%, #90FD7D 50%, #A2FC6F 72%, #BBFB5C 93%, #C5FA55 100%); -webkit-background-clip: text; background-clip: text; color: transparent; border: 1px solid #90FD7D; border-color: #90FD7D; border-radius: 6px; height: 44px; font-weight: 600; line-height: 105%; text-align: center;}
-    /* About */
-    .text-right-image-left-container { display: flex; gap: 70px; } /* This class needs context */
-
-    /* Services Grid (General, like High Impact) */
-    .services-grid { grid-template-columns: repeat(2, 1fr); } /* Change from 3 to 2 for generic */
-
-    /* Text Left Image Right Section */
-    .text-left-image-right-container { gap: 40px;  }
-    .image-content-column, .text-content-column { max-width: 100%; margin-left: 0; } /* Make full width when stacking */
-    .text-content-column h2 { font-size: 2em; margin-bottom: 1em; } /* Adjust H2 margin */
-    .text-content-column p { transform: translateY(0); } /* Reset transform */
-    .highlight-dark-bg { white-space: normal; }
-    .image-content-column::before { width: 60%; height: 80%; top: -15px; left: -15px; }
-
-    /* Process Section (meticulous or ebook) */
-    .process-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } /* If .process-grid is used */
-    .process-header-row { grid-template-columns: 1fr; text-align: center; gap: 20px;}
-    .process-heading-block h2 { font-size: 16px; }
-
-    /* Hero Section Breakout (Solutions as per Business Need) */
-    .hero-section-breakout { padding: 60px 0; max-width: 95%; border-radius: 20px;}
-    .hero-container-breakout { padding: 0 30px; gap: 20px;}
-    .hero-text-content-breakout h1 { font-size: 3em; } /* This might be the larger hero title */
-
-    /* Our Work Slider */
-    .our-work-section .header-text { max-width: 55%; } /* Give more space to nav */
-    .our-work-section .portfolio-item { width: 340px; }
-
-    /* Services Grid V2 (High Impact) */
-    .services-grid-v2 { grid-template-columns: repeat(3, 1fr); }
-    .section-title-services { font-size: 2.5em; }
-
-
-    /* Footer */
-    .get-in-touch h2 { font-size: 30px; }
-    .get-in-touch .subtitle { font-size: 18px; }
-    .location-item h4 { font-size: 20px; }
-    .location-item address, .location-item .phone-link { font-size: 15px; }
-    .footer-column h4 { font-size: 16px; }
-    .link-column ul li, .link-column ul li a { font-size: 13px; line-height: 2.5; } /* Reduced line-height */
-    .footer-links-grid { grid-template-columns: 40% 60%; gap: 30px; }
-    .services-menu-column { padding-left: 30px; }
-    .services-menu-column::before { left: -15px; }
-}
-
-
-/* --- Tablet - Portrait & Smaller Laptops (~992px) --- */
-@media (max-width: 991px) {
-    h1 { font-size: 2.6em; }
-    h2 { font-size: 2em; }
-
-    /* Header */
-    .header-cta { display: none; }
-    .nav-cta-wrapper { display: contents; } /* This might not be the desired effect, usually menu toggle handles this */
-
-     .services-grid {
-        grid-template-columns: 1fr;;
-        gap: 30px;
-        padding-bottom: 60px; /* Adjust space for overflow */
-    }
-    .service-card {
-        width: calc(50% - 15px); /* Aim for 2 cards, accounting for gap */
-        min-width: 280px; /* Prevent cards from getting too small */
-        min-height: 380px;
-    }
-    .service-image-container img {
-        bottom: -50px;
-        width: 100%;
-        max-width: 300px;
-    }
-
-    .section-header p {
-        text-align: center;
-    }
-
-    .section-header h2 {
-        text-align: center;
-    }
-
-    .section-header p span {
-        color: #fff;
-        font-size: 14px;
-    }
-    
-
-
-    /* Footer */
-    .locations-grid { grid-template-columns: 1fr; gap: 30px; text-align: center; }
-    .location-item { padding-left: 0; }
-    .location-item:not(:first-child)::before { display: none; }
-    .footer-links-grid { grid-template-columns: 1fr; gap: 40px; }
-    .services-menu-column { padding-left: 0; }
-    .services-menu-column::before { display: none; }
-    .main-menu-column .link-columns-wrapper,
-    .services-menu-column .link-columns-wrapper { grid-template-columns: repeat(1, 1fr); } /* Stack sub-columns */
-}
-
-
-/* --- Mobile - Landscape & Large Phones (~768px) --- */
-@media (max-width: 768px) {
-    .section-padding { padding: 50px 0; }
-    h1 { font-size: 2.2em; }
-    h2 { font-size: 1.8em; }
-    p { font-size: 0.95em; }
-    body { font-size: 15px; }
-
-    /* Header Mobile Menu Activation */
-    .main-navigation {
-        display: none; position: absolute; top: 100%; left: 0; width: 100%;
-        background-color: rgba(12, 16, 20, 0.98); padding: 10px 0;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3); border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .main-navigation.mobile-active { display: block; }
-    .main-navigation.mobile-active ul { display: flex; flex-direction: column; align-items: center; gap: 0; }
-    .main-navigation.mobile-active li { width: 100%; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-    .main-navigation.mobile-active li:last-child { border-bottom: none; }
-    .main-navigation.mobile-active a { padding: 12px; display: block; border-bottom: none; font-size: 1em; }
-    .main-navigation.mobile-active a:hover, .main-navigation.mobile-active a.active { background-color: rgba(76, 175, 80, 0.1); color: var(--color-primary-green); }
-    .main-navigation.mobile-active .mobile-cta { display: block; padding: 20px 0; text-align: center; } /* Center mobile CTA */
-    .main-navigation.mobile-active .mobile-cta a.button { padding: 10px 25px; display: inline-block; width: auto; }
-
-    /* Hero (#home) */
-    .hero-section { padding-top: 100px; padding-bottom: 60px; }
-    .hero-container { flex-direction: column; text-align: center; gap: 40px; }
-    .hero-text, .hero-form { max-width: 100%; } /* .hero-form is generic, ensure it refers to the correct one */
-    /* .hero-form { max-width: 500px; margin: 0 auto; padding: 30px 25px; } Specific for one hero form */
-    /* .hero-form h3 { font-size: 16px;} */
-
-    /* Hero Form Breakout */
-    .hero-section-form-breakout { padding: 50px 0; margin: 20px auto; }
-    .hero-container-form-breakout { flex-direction: column; text-align: center; gap: 0; padding: 0 15px; }
-    .hero-text-form-breakout { max-width: 100%; margin-bottom: 40px; order: 1; }
-    .hero-form-wrapper { max-width: 90%; margin: 0 auto; order: 2; }
-    .hero-form.breakout-form { transform: none; padding: 25px 20px; }
-    .hero-text-form-breakout h1 { font-size: 2.2em; }
-    .hero-form.breakout-form h3 { font-size: 16px; }
-    .hero-arrow-container { display: none; }
-
-    /* About */
-    .text-right-image-left-container { flex-direction: column; gap: 40px; text-align: center; }
-    .about-image-column, .about-text-column { max-width: 100%; text-align: center;}
-    .about-image-column { order: 1; max-width: 80%; margin: 0 auto; }
-    .about-text-column { order: 2;}
-
-
-    /* Services (General Grid) */
-    .services-grid { grid-template-columns: 1fr; gap: 25px; }
-    .service-card { width: auto; } /* Allow card to be full width in single column */
-
-    /* Services (Enhanced Header Section) */
-    .section-header-enhanced { justify-content: center; text-align: center; flex-direction: column; align-items: center; }
-    .section-header-enhanced .section-header { flex-basis: 100%; } /* Full width for text */
-    .section-header-enhanced .section-header h2 { font-size: 2.5em; } /* Adjust for mobile */
-    .section-header-enhanced .section-header p { font-size: 14px; }
-    .section-header-enhanced .section-header p span { font-size: 14px; }
-    .service-nav-arrows { display: none; } /* Hide arrows on mobile by default for this section */
-
-    /* Text Left Image Right */
-    .text-left-image-right-container { flex-direction: column; gap: 40px; text-align: center;}
-    .image-content-column::before { display: none; }
-    .image-content-column { max-width: 80%; margin: 0 auto; order: 1; }
-    .text-left-image-right-container .text-content-column { order: 2;}
-    .text-left-image-right-container .text-content-column h2 { font-size: 1.6em; margin-bottom: 1em; } /* Was 16px, adjust */
-    .text-content-column p { transform: translateY(0); }
-
-
-    /* Process (Meticulous and Ebook) */
-    .process-header-row { text-align: center; gap: 20px; }
-    .process-grid { gap: 20px; } /* If used */
-    .process-flow-wrapper { flex-direction: column; align-items: center; gap: 50px; }
-    .process-step { width: 90%; max-width: 350px; text-align: center; }
-    .step-header { justify-content: center; margin-bottom: 20px; }
-    .step-header::after { left: 50%; transform: translateX(-50%); bottom: -20px; height: 20px; }
-    .step-content { text-align: left; min-height: auto; }
-    .process-step:not(:last-child) .step-content::after,
-    .process-step:not(:last-child) .step-content::before { display: none; }
-    .process-step:not(:last-child)::after { content: ''; position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); width: 2px; height: 20px; background-color: var(--color-meticulous-process-accent); }
-
-
-    /* --- CTA Section with Image Overflow --- */
-.cta-section-overflow {
-   /* background-color: #f0f4f8; /* Or your page background */
-}
-
-.cta-overflow-container {
-    /* No specific positioning needed here unless part of a wider layout */
-}
-
-.cta-content-box {
-    display: flex;
-    align-items: center;
-    gap: 30px; /* Adjust gap as needed if columns are not absolutely positioned */
-    border-radius: var(--border-radius-lg);
-    position: relative;
-    overflow: visible; /* Allows image to overflow */
-    padding: 60px 40px 60px 70px; /* Left padding more, Right less due to image */
-    min-height: 350px;
-}
-
-/* Subtle background lines (keep existing styles) */
-.cta-content-box::before,
-.cta-content-box::after { /* ... existing styles ... */ z-index: 0;}
-
-
-/* Left Text Column */
-.cta-text {
-    flex: 1 1 50%;
-    min-width: 280px; /* Adjusted min-width */
-    order: 1;      /* === ENSURE THIS IS 1 OR REMOVE IF HTML IS ALREADY IN ORDER === */
-    position: relative;
-    z-index: 2;    /* Above background lines */
-    padding-right: 20px;
-}
-.cta-text .highlight {
-    color: Green;
-}
-
-.cta-text h2 {
-    font-size: 3.5em;
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 40px;
-}
-.cta-text .button {
-    font-size: 1.05em;
-    padding: 14px 35px;
-}
-
-/* Right Image Column Wrapper */
-.cta-image-overflow-wrapper {
-    flex: 0 0 auto; /* Prevent growing, allow shrinking if needed, basis from width */
-    width: 50%;     /* Define a conceptual width */
-    order: 2;      /* === ENSURE THIS IS 2 OR REMOVE IF HTML IS ALREADY IN ORDER === */
-    position: absolute;
-    top: -50px;
-    right: -70px; /* Pulls image to the right edge and beyond */
-    bottom: -50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; /* Aligns tablet container to the right */
-    z-index: 1;
-    pointer-events: none;
-}
-
-.tablet-image-tilt-container {
-    display: inline-block;
-    pointer-events: auto;
-}
-.tablet-image-tilt-container img {
+.location-item .phone-link {
+    color: var(--color-footer-link-text);
+    font-size: 20px;
+    font-weight: 500;
     display: block;
-    max-width: none; /* Allow overflow */
-    height: 600px;
-    transition: transform 0.4s ease;
-    border-radius: var(--border-radius-md);
-}
-
-    /* Our Work Slider */
-    .our-work-section .header-text h2 { font-size: 2.2em; }
-    .our-work-section .header-text p { font-size: 0.9em; }
-    /* .our-work-section .slider-nav { display: none !important; } Managed by JS */
-    .our-work-section .portfolio-slider-wrapper { margin: 0 -10px; padding: 0 10px;}
-    .our-work-section .portfolio-items { gap: 15px; padding-bottom: 30px; }
-    .our-work-section .portfolio-item { width: calc(80vw - 15px); max-width: 280px; padding: 25px 20px; }
-    .our-work-section .portfolio-item .item-text h4 { font-size: 1.5em; }
-    .our-work-section .portfolio-item .item-text h3,
-    .our-work-section .portfolio-item .item-text h5 { font-size: 0.9em; }
-
-
-    /* High Impact Services */
-    .section-title-services { font-size: 1.8em; margin-bottom: 40px; }
-    .services-grid-v2 { grid-template-columns: 1fr; gap: 20px; }
-    .service-card-v2 { padding: 25px 20px; }
-    .card-icon-v2 { width: 60px; height: 60px; margin-bottom: 25px; }
-    .card-icon-v2 svg { width: 24px; height: 24px; }
-    .card-title-v2 { font-size: 1.1em; }
-    .card-description-v2 { font-size: 0.9em; }
-
-    /* Hero Section Breakout (Solutions) */
-    .hero-section-breakout { padding: 50px 0; margin: 20px auto; border-radius: 15px;}
-    .hero-container-breakout { flex-direction: column; text-align: center; padding: 0 20px; gap: 40px; }
-    .hero-text-content-breakout, .hero-image-content-breakout { max-width: 100%; text-align: center; }
-    .hero-text-content-breakout { order: 2; }
-    .hero-image-content-breakout { order: 1; transform: none; margin-right: 0; max-width: 85%; margin-left: auto; margin-right: auto; }
-    .hero-text-content-breakout h1 { font-size: 2.2em; margin-bottom: 25px; }
-
-
-    /* Footer */
-    .get-in-touch h2 { font-size: 2.2em; } /* Was 1.8em, adjusted */
-    .get-in-touch .subtitle { font-size: 1.1em; } /* Was 1em */
-    .contact-form input[type="text"], .contact-form input[type="email"], .contact-form button { min-width: 100%; max-width: 100%;} /* Ensure button is also full width */
-    .link-columns-wrapper { grid-template-columns: 1fr; text-align: center; gap: 10px; }
-    .footer-column h4 { text-align: center; font-size: 1.1em; }
-    .link-column ul li { padding-left: 0; text-align: center; margin-bottom: 10px; line-height: 1.8;}
-    .link-column ul li::before { display: none; }
-    .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
-}
-
-/* --- Mobile - Portrait & Smaller --- */
-@media (max-width: 576px) {
-    h1 { font-size: 1.9em; }
-    h2 { font-size: 1.6em; }
-    body { font-size: 15px; } /* Was 15px, can go to 14px if needed */
-    p { font-size: 0.9rem; }
-
-    .section-padding { padding: 40px 0; }
-    .container { padding: 0 15px; }
-
-    /* Header */
-    .logo img { max-height: 35px; }
-
-    /* Hero (#home) */
-    .hero-text h1 { font-size: 1.9em; }
-    .hero-text .subtitle { font-size: 0.9em; }
-    /* .hero-form { padding: 25px 20px; } */
-
-    /* Hero Form Breakout */
-    .hero-text-form-breakout h1 { font-size: 2em; }
-    .hero-form-wrapper { max-width: 100%; }
-
-    /* About */
-    .about-text-column p { font-size: 0.9rem; } /* Was 16px */
-
-    /* Services (General) */
-    .service-card h4 { font-size: 1.1em; } /* This targets .service-card, not .service-card-process specifically */
-    /* .service-card .sub-service { font-size: 0.9rem; } Add if .sub-service class used */
-
-    /* Text Left Image Right */
-    .text-content-column h2 { font-size: 1.6em; } /* Was 16px, make relative */
-    .text-content-column p { font-size: 0.9rem; } /* Was 14px */
-
-   .cta-content-box {
-    background-color: var(--cta-overflow-box-bg);
-    color: var(--cta-overflow-text-color);
-    border-radius: var(--border-radius-lg, 24px);
-    padding: 50px 60px; /* Generous padding inside the dark box */
-    display: flex;
-    align-items: center;
-    gap: 40px; /* Gap between text and image columns */
-    position: relative; /* Needed for the image to "break out" visually */
-    /* overflow: hidden; /* DO NOT set overflow:hidden here if image needs to break out */
-}
-
-.cta-text {
-    flex: 1 1 50%; /* Adjust flex-basis as needed */
-    max-width: 50%;
-    position: relative; /* For z-index stacking if needed */
-    z-index: 2; /* Ensure text is above any part of the image that might visually go "under" */
     color: #fff;
 }
 
-.cta-text h2 {
-    font-size: 36px; /* Adjust size to match design */
-    font-weight: 600;
-    line-height: 1.25;
-    color: var(--cta-overflow-text-color);
-    margin-bottom: 30px;
+.footer-links-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
 }
-
-.cta-text h2 .highlight { /* Assuming .highlight is for "Solutions" */
-    color: Green;
+.footer-column h4 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
 }
-.cta-text h2 br { display: none; } /* Let text wrap based on width */
-
-
-/* Button styling for this section */
-.cta-text .button.button-gradient {
-    /* .button class provides base: display, padding, border-radius, font, text-align, cursor, transition */
-    background: var(--button-gradient, linear-gradient(90deg, #81FE88 1%, #85FE85 27%, #90FD7D 50%, #A2FC6F 72%, #BBFB5C 93%, #C5FA55 100%));
-    color: var(--cta-overflow-button-text-color);
-    font-weight: 600;
-    border: none; /* Remove border if gradient button doesn't have one */
-    padding: 12px 35px; /* Adjust padding for visual balance */
-    font-size: 1em;
-    box-shadow: 0 4px 15px rgba(129, 254, 136, 0.25); /* Subtle glow effect */
+.link-columns-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px 20px;
 }
-.cta-text .button.button-gradient:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(129, 254, 136, 0.35);
-}
-
-
-.cta-image-overflow-wrapper {
-    flex: 1 1 50%;
-    max-width: 50%;
+.link-column ul li {
+    font-weight: 400;
+    line-height: 2;
     position: relative;
-    display: flex; /* Helps in centering or aligning the inner container */
-    justify-content: center; /* Or flex-end if image should align to the right edge */
+    padding-left: 20px;
+    margin-bottom: 5px;
+}
+.link-column ul li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+    color: var(--color-footer-link-text);
+}
+.link-column ul li a {
+    color: var(--color-footer-link-text);
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+}
+
+.footer-divider.bottom-divider { margin-top: 50px; margin-bottom: 25px; }
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    /* The key to overflow: the wrapper takes space, but image inside can be larger/offset */
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.social-icons { display: flex; gap: 15px; }
+.social-icons a {
+    color: #fff;
+    font-size: 1.2em;
+}
+.copyright {
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    flex-basis: 100%;
+}
+@media (min-width: 577px) {
+    .copyright {
+        flex-basis: auto;
+        text-align: right;
+    }
 }
 
-.tablet-image-tilt-container {
-    width: 100%; /* Container for the image itself */
-    max-width: 500px; /* Max physical size of the tablet visual */
-    position: relative;
-    /* transform-style: preserve-3d; /* If using 3D rotations */
-    /* perspective: 1000px; */
+
+/* --- Responsive Styles --- */
+
+/* Medium Devices (Tablets, landscape phones) */
+@media (min-width: 768px) {
+    .footer-links-grid {
+        grid-template-columns: 35% 60%; /* 2 columns: main menu, services */
+        gap: 5%;
+    }
+    .main-menu-column .link-columns-wrapper,
+    .services-menu-column .link-columns-wrapper {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for links within each section */
+    }
+    .services-menu-column {
+        position: relative;
+        padding-left: 40px; /* Space for vertical rule */
+    }
+    .services-menu-column::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 1px;
+        background-color: var(--color-footer-rule);
+    }
 }
 
-.tablet-image-tilt-container img {
-    width: 120%; /* Make image larger than its container to "overflow" */
-    max-width: none; /* Override global img max-width: 100% */
-    height: auto;
-    display: block;
-    border-radius: 10px; /* Rounding for the tablet image itself */
-    filter: drop-shadow(var(--cta-image-shadow));
 
-    /* Angling and positioning */
-    position: relative; /* Relative to its .tablet-image-tilt-container */
-    /* Adjust these values to match the Figma design's angle and breakout */
-    transform: translateX(10%) rotateY(-12deg) rotateX(3deg) rotateZ(-5deg) translateY(-5%);
-    /* translateX pushes it right, effectively making it overflow the dark box */
-    /* translateY can adjust vertical position */
-    z-index: 1; /* Can be behind text if text has higher z-index */
+/* Smaller Tablets and Large Mobile (Portrait) */
+@media (max-width: 991.98px) {
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    .section-padding, .section-padding-web {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    /* Header Mobile Menu Activation */
+    .menu-toggle { display: block; }
+    .nav-cta-wrapper {
+        display: none; /* Hide nav and CTA by default */
+        position: absolute;
+        top: 100%; /* Position below header */
+        left: 0;
+        width: 100%;
+        background-color: var(--color-dark-bg); /* Or a slightly transparent version */
+        flex-direction: column;
+        align-items: stretch; /* Full width items */
+        padding: 20px 0;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    .nav-cta-wrapper.mobile-active { /* Class added by JS to show menu */
+        display: flex;
+    }
+    .main-navigation ul {
+        flex-direction: column;
+        text-align: center;
+        gap: 0;
+    }
+    .main-navigation li {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .main-navigation li:last-child {
+        border-bottom: none;
+    }
+    .main-navigation a {
+        display: block;
+        padding: 15px;
+        border-bottom: none; /* Remove individual link border */
+    }
+    .main-navigation a:hover, .main-navigation a.active {
+        background-color: rgba(255,255,255,0.05);
+        border-bottom-color: transparent; /* Override desktop style */
+    }
+    .header-cta {
+        margin-top: 20px;
+        padding: 0 20px; /* Add padding for button container */
+    }
+    .header-cta .button-primary {
+        display: block; /* Make button full width */
+        width: 100%;
+    }
+
+    /* Hero Section Stack */
+    .hero-container-form-breakout {
+        flex-direction: column;
+        text-align: center; /* Center text when stacked */
+        gap: 40px;
+    }
+    .hero-text-form-breakout, .hero-form-wrapper {
+        max-width: 100%;
+        flex-basis: auto;
+    }
+    .hero-text-form-breakout { order: 1; }
+    .hero-form-wrapper { order: 2; }
+    .hero-form.breakout-form { transform: translateY(0); }
+    .hero-arrow-container { display: none; } /* Hide arrow on stack */
+    .form-group input .form-group textarea { color: #fff; }
+
+    .section-header-enhanced .section-header h2 { text-align: center; }
+    .section-header-enhanced .section-header p { text-align: center; }
+    .service-nav-arrows { display: none; }
+    .contact-form { display: grid; }
+    .service-card { height: 400px; }
+ 
+
+.text-left-image-right-section .text-content-column h2 { font-size: 18px; color: var(--color-text-dark); margin-bottom: 0.75; }
+.text-right-image-left-section .text-content-column h2 { font-size: 18px; }
+
+    /* CTA Overflow - Tablet Adjustment */
+    .cta-content-box { padding: 40px 30px; }
+    .cta-text h2 { font-size: 2.5rem; }
+    .cta-image-overflow-wrapper {
+        width: 35%; /* Reduce image proportion */
+        right: -30px; top: -30px; bottom: -30px;
+    }
+    .tablet-image-tilt-container img { height: 450px; }
+
+    /* Process Section Header Stack */
+    .process-header-row { grid-template-columns: 1fr; text-align: center;}
+    .process-heading-block h2 { margin: 0 auto 0.7em auto; font-size: 18px; } /* Center heading */
+    .process-description-block .dynamicWebsite { font-size: 18px; font-weight: 500; color: #000; }
+    .process-description-block .game-changer { font-size: 18px; font-weight: 500; color: #000;}
 }
 
-    /* Process */
-    .section-header-process h2 { font-size: 1.6em; }
-    .section-header-process p { font-size: 0.9em; }
-    .step-title { font-size: 1em; }
-    .step-content p { font-size: 0.85em; }
+/* Mobile Devices */
+@media (max-width: 767.98px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1.1rem; }
+    .section-padding, .section-padding-web {
+        padding-top: var(--padding-section-mobile);
+        padding-bottom: var(--padding-section-mobile);
+    }
 
-    /* Our Work Slider */
-    .our-work-section .header-text h2 { font-size: 1.8em; }
-    .our-work-section .portfolio-item { width: calc(85vw - 15px); padding: 20px 15px; }
-    .our-work-section .portfolio-item .item-text h4 { font-size: 1.4em; }
-    .our-work-section .portfolio-item .item-text h3,
-    .our-work-section .portfolio-item .item-text h5 { font-size: 0.85em; }
+    /* Text + Image sections stack */
+    .text-right-image-left-container,
+    .text-left-image-right-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    .text-right-image-left-section .about-text-column, /* Image */
+    .text-left-image-right-section .image-content-column, /* Image */
+    .text-right-image-left-section .text-content-column, /* Text */
+    .text-left-image-right-section .text-content-column { /* Text */
+        max-width: 100%;
+        flex-basis: auto;
+    }
+    .text-right-image-left-section .about-text-column { order: 1; margin-bottom: 20px;} /* Image first for "our-story" */
+    .text-right-image-left-section .text-content-column { order: 2; }
+    .text-left-image-right-section .text-content-column { order: 1; } /* Text first for "group-4" */
+    .text-left-image-right-section .image-content-column { order: 2; margin-top: 20px;}
 
-    /* High Impact Services */
-    .section-title-services { font-size: 1.6em; }
-    .service-card-v2 { padding: 20px 15px; }
-    .card-icon-v2 { width: 50px; height: 50px; margin-bottom: 20px; }
-    .card-icon-v2 svg { width: 22px; height: 22px; }
-    .card-title-v2 { font-size: 1em; }
-    .card-description-v2 { font-size: 0.85em; }
+    .text-right-image-left-section .about-text-column::before, /* Hide decorative bars/shapes on stack */
+    .text-left-image-right-section .image-content-column::before {
+        display: none;
+    }
 
-    /* Hero Section Breakout (Solutions) */
-    .hero-text-content-breakout h1 { font-size: 1.8em; } /* Was 1.6em */
-    .cta-button-breakout { font-size: 0.9em; padding: 10px 20px; }
+    /* Our Services SLIDER Cards - Aim for one full card visible */
+    .service-card { /* This targets cards in the SLIDER */
+        width: 85vw; /* Slightly less than full viewport width to show hint of next */
+        max-width: 340px; /* Cap max width */
+        margin-right: 15px; /* Smaller gap on mobile */
+    }
+    /* REMOVED: .services-grid{ grid-template-columns: none; } as it was too generic.
+       The #services-grid-items (slider) is flex.
+       The .services-section-process .services-grid (process cards) uses auto-fit.
+    */
 
-    /* Process Card Specific (if used, distinct from .service-card) */
-    .process-card h4 { font-size: 1em; } /* Assuming .process-card is a class for cards in process section */
-    .process-card p { font-size: 0.85em; }
 
-    /* Footer */
-    .get-in-touch h2 { font-size: 1.8em; } /* Was 1.6em */
-    .get-in-touch .subtitle { font-size: 1em; } /* Was 0.95em */
-    .location-item h4 { font-size: 1em; } /* Was 0.95em */
-    .location-item address, .location-item .phone-link { font-size: 0.85em; } /* Was 0.9em */
-    .footer-column h4 { font-size: 1em; } /* Was 0.95em */
-    .link-column ul li a { font-size: 0.85em; line-height: 2.2; } /* Was 0.9em */
+    /* CTA Overflow - Stack Image Below */
+    .cta-content-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+        overflow: hidden; /* Clip image when stacked */
+    }
+    .cta-text { padding-right: 0; margin-bottom: 30px; flex-basis: auto; }
+    .cta-image-overflow-wrapper {
+        position: relative; /* No longer absolute */
+        top: auto; right: auto; bottom: auto;
+        width: 80%; /* Control stacked image width */
+        max-width: 350px;
+        margin: 0 auto; /* Center the image */
+        justify-content: center;
+    }
+    .tablet-image-tilt-container img {
+        height: auto; /* Let width control height */
+        width: 100%;
+        transform: none; /* Reset tilt */
+    }
+    .tablet-image-tilt-container:hover img {
+        transform: scale(1.02); /* Simpler hover for stacked */
+    }
+
+    /* Footer Locations - Ensure they stack cleanly */
+    .locations-grid { gap: 20px; } /* Reduce gap for stacked items */
+    .location-item { text-align: center; }
+
+    /* Footer links - already 1 column, adjust spacing if needed */
+    .link-column ul li { text-align: center; padding-left: 0; }
+    .link-column ul li::before { display: none; } /* Hide '>' on mobile centered links */
 }
 
-.design {
-  color: #90FD7D;
+/* Very Small Mobile Devices */
+@media (max-width: 480px) {
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.5rem; }
+    .logo img { max-height: 35px; }
+
+    .hero-text-form-breakout .subtitle { font-size: 0.9rem; }
+    .hero-form.breakout-form { padding: 20px 15px; }
+    .hero-form.breakout-form h3 { font-size: 1.3rem; }
+
+    .button { font-size: 0.9rem; padding: 10px 20px;}
+    .button-gradient { padding: 12px 25px; } /* Dark CTA button */
+
+    .section-header-enhanced .section-header h2 { font-size: 1.8rem; } /* Our Services title */
+    .section-header-enhanced .section-header p { font-size: 0.9rem; }
+    .service-card h4:not(.highlight-dark-bg):not(.sub-service) { font-size: 1.3rem; }
+    .highlight-dark-bg { font-size: 1.1rem; } /* "Design & Dev" */
+
+    .cta-text h2 { font-size: 2rem; }
+
+    .get-in-touch h2 { font-size: 1.8rem; }
+    .get-in-touch .subtitle { font-size: 1rem; }
+    .contact-form input, .contact-form button { font-size: 0.9rem; }
 }
